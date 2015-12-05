@@ -1,6 +1,6 @@
 import numpy as np
 import sys
-sys.path.append(".././utils")
+sys.path.append("../.utils")
 from t_test import *
 from find_activated_voxel_functions import *
 from convolution_normal_script import X_matrix
