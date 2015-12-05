@@ -16,8 +16,8 @@ Steps:
 5. Save to txt files
 """
 
-import sys
-sys.path.append(".././utils")
+import sys, os
+sys.path.append("../utils")
 import numpy as np
 import matplotlib.pyplot as plt
 import nibabel as nib
@@ -25,6 +25,30 @@ from stimuli import *
 from scipy.stats import gamma
 from organize_behavior_data import *
 from load_BOLD import *
+
+###TODO: Change the following folders names as you wich
+# Create the necessary directories if they do not exist
+dirs = ['../../txt_output', '../../txt_output/FOLDER_NAME',\
+        '../../fig','../../fig/FOLDER_NAME']
+for d in dirs:
+    if not os.path.exists(d):
+            os.makedirs(d)
+
+# Locate the different paths
+#TODO: the current location for this file project-epsilon/code/scripts
+project_path = '../../'
+# TODO: change it to relevant path
+data_path = '../data/ds005_raw_origin/'
+
+# TODO: uncomment for final version
+#subject_list = [str(i) for i in range(1,17)]
+subject_list = ['11', '5', '1']
+run_list = [str(i) for i in range(1,4)]
+images_paths = [('ds005_sub' + s.zfill(3) + '_t1r' + r, \
+                 dir_path + 'sub' + s.zfill(3) + '/BOLD/task001_run' \
+                 + r.zfill(3) + '/bold.nii.gz') for r in run_list \
+                 for s in subject_list]
+
 
 
 location_of_data="../../data/ds005/"
