@@ -1,5 +1,5 @@
 import sys
-sys.path.append(".././utils")
+sys.path.append("../utils")
 import numpy as np
 from glm import *
 from convolution_normal_script import X_matrix
