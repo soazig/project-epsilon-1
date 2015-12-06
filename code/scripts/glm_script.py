@@ -1,4 +1,4 @@
-import sys
+import sys, os
 sys.path.append("../utils")
 import numpy as np
 from glm import *
@@ -9,11 +9,36 @@ import nibabel as nib
 import matplotlib.pyplot as plt
 from smoothing import *
 
+# Create the necessary directories if they do not exist
+dirs = ['../../txt_output', '../../txt_output/FOLDER_NAME',\
+        '../../fig','../../fig/FOLDER_NAME']
+for d in dirs:
+    if not os.path.exists(d):
+            os.makedirs(d)
+
+# Locate the different paths
+project_path = '../../'
+# TODO: change it to relevant path
+data_path = project_path + 'data/ds005/'
+
+# TODO: uncomment for final version select your own subject
+#subject_list = [str(i) for i in range(1,17)]
+subject_list = ['1']
+#TODO: select your own run id
+run_list = [str(i) for i in range(1,2)]
+images_paths = [('ds005_sub' + s.zfill(3) + '_t1r' + r, \
+                 data_path + 'sub' + s.zfill(3) + '/BOLD/task001_run' \
+                 + r.zfill(3) + '/bold.nii.gz') for r in run_list \
+                 for s in subject_list]
+#TODO: remove the following
 location_of_plot = "../../plots/"
 location_of_data = "../../data/ds005/"
 
 # get 4_d image data
-data = load_img(1,1)
+for s in subject_list:
+    for r in run_list: 
+        data = load_img(s,r)
+	name = 'ds005_sub' + s.zfill(3) + '_t1r' + r
 
 beta_4d = glm_beta(data,X_matrix)
 MRSS, fitted, residuals = glm_mrss(beta_4d, X_matrix, data)
