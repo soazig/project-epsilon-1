@@ -1,18 +1,49 @@
+"""
+ADD DESCRIPTION
+"""
+
+import sys, os
+sys.path.append("../utils")
 import numpy as np
-import sys
-sys.path.append("../.utils")
+import nibabel as nib
+import matplotlib.pyplot as plt
+import matplotlib
+
 from t_test import *
 from find_activated_voxel_functions import *
 from convolution_normal_script import X_matrix
-import nibabel as nib
-import matplotlib.pyplot as plt
 from scipy.ndimage import gaussian_filter
 from matplotlib import colors
-import matplotlib
 
 
+# Create the necessary directories if they do not exist
+dirs = ['../../txt_output', '../../txt_output/FOLDERS_NAME',\
+        '../../fig','../../fig/FOLDER_NAME']
+for d in dirs:
+    if not os.path.exists(d):
+        os.makedirs(d)
+
+# Locate the different paths
+project_path = '../../'
+data_path = project_path + 'data/ds005/'
+
+# TODO: uncomment for final version
+#subject_list = [str(i) for i in range(1,17)]
+subject_list = ['1']
+run_list = [str(i) for i in range(1,2)]
+
+#TODO: Change to relevant path for data or other thing
+images_paths = [('ds005_sub' + s.zfill(3) + '_t1r' + r, \
+                 dir_path + 'sub' + s.zfill(3) + '/BOLD/task001_run' \
+                 + r.zfill(3) + '/bold.nii.gz') for r in run_list \
+                 for s in subject_list]
+
+#TODO: remove the following
 location_of_data = "../../data/ds005/sub001/BOLD/task001_run001/"
 location_of_plot = "../../plots/"
+
+
+#TODO:See the script hist-mosaic for plot
 
 img = nib.load(location_of_data+ "bold.nii")
 data = img.get_data()
