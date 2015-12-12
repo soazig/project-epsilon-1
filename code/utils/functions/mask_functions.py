@@ -60,5 +60,5 @@ def apply_mask(data_3d, mask_3d):
     b = mask_3d.shape
     assert(a == b), "Data and mask shape differ \n" \
     + "Data shape is: %s\nMask shape is: %s" %(data_3d.shape, mask_3d.shape)
-    return arr_3d * mask_3d 
+    return data_3d * mask_3d 
 
