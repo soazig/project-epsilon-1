@@ -19,6 +19,40 @@ import pprint as pp
 #Specicy the path for functions
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 from diagnostics import *
+from glm import *
+
+# Locate the paths
+project_path = '../../../'
+data_path = '../../data/ds005/' 
+path_dict = {'data_original':{ 
+			      'type' : '',
+			      'bold_img_name' : 'filtered_func_data_mni.nii.gz',
+			      'run_path' : 'model/model001/'
+			     },
+             'data_filtered':{
+		       	      'type' : 'filtered',
+                              'bold_img_name' : 'bold.nii.gz',
+                              'run_path' : 'BOLD/'
+			     }}
+			
+# TODO: uncomment for final version
+#subject_list = [str(i) for i in range(1,17)]
+#run_list = [str(i) for i in range(1,4)]
+run_list = [str(i) for i in range(1,3)]
+subject_list = ['1']
+
+d = path_dict['data_original'] #OR path_dict['data_filtered']
+
+images_paths = [('ds005_' + d['type'] +'_sub' + s.zfill(3) + '_t1r' + r, \
+                 data_path + 'sub%s/'%(s.zfill(3)) + d['run_path'] \
+                 + 'task001_run%s/%s' %(r.zfill(3), d['bold_img_name'])) \
+                 for r in run_list \
+                 for s in subject_list]
+
+# Import mask function - for filtered data only
+mask_img = nib.load('../../data/mni_icbm152_t1_tal_nlin_asym_09c_mask_2mm.nii')
+# Make data 4D to prepare for "broadcasting"
+mask = np.reshape(mask, mask.shape + (1,))
 
 # Create the needed directories if they do not exist
 #dirs = ['../../fig/','../../fig/linear_projection',\
@@ -26,23 +60,6 @@ from diagnostics import *
 #for d in dirs:
 #    if not os.path.exists(d):
 #        os.makedirs(d)
-
-# Locate the paths
-project_path = '../../../'
-bold_img_name = 'filtered_func_data_mni.nii.gz' #OR 'bold.nii.gz'
-data_path = '../../data/ds005/' 
-data_state = 'filtered' #OR ''
-run_path = 'model/model001/' #OR '/BOLD/'
-# TODO: uncomment for final version
-#subject_list = [str(i) for i in range(1,17)]
-#run_list = [str(i) for i in range(1,4)]
-run_list = [str(i) for i in range(1,3)]
-subject_list = ['1']
-images_paths = [('ds005_' + data_state +'_sub' + s.zfill(3) + '_t1r' + r, \
-                 data_path + 'sub%s/'%(s.zfill(3)) + run_path \
-                 + 'task001_run%s/%s' %(r.zfill(3), bold_img_name)) \
-                 for r in run_list \
-                 for s in subject_list]
 
 # set gray colormap and nearest neighbor interpolation by default
 plt.rcParams['image.cmap'] = 'gray'
