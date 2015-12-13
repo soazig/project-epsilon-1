@@ -50,9 +50,18 @@ def make_binary_mask(data, mask_bool):
 
     Return
     ------
-    
-    
     """
+    data = np.asarray(data)
+    mask_bool = np.asarray(mask_bool)
+    assert(len(data.shape) == len(mask_bool.shape)),\
+    "Data and mask shape differ \n" \
+    + "Data dim is: %s\nMask dim is: %s" \
+    %(len(data.shape), len(mask_bool.shape))
+    assert(all(data.shape[i] >= mask_bool.shape[i] \
+           for i in range(len(data.shape)))),\
+    "Data and mask shape are not compatible"\
+    +"Data shape is: %s\nMask shape is: %s"\
+    %(data.shape, mask_bool.shape)
     new_mask = np.zeros(data.shape)
     new_mask[mask_bool] = 1
     return new_mask 
@@ -101,10 +110,17 @@ def apply_mask(data, mask):
         Array with the values of the data at the selected positions
 	and 0 for the position filtered out by the mask.
     """
+    assert(data.shape == mask.shape), "Data and mask shape differ \n" \
+    + "Data shape i: %s\nMask shape is: %s" %(data.shape, mask.shape)
+    return data * mask 
 
-    a = data_3d.shape
-    b = mask_3d.shape
-    assert(a == b), "Data and mask shape differ \n" \
-    + "Data shape is: %s\nMask shape is: %s" %(data_3d.shape, mask_3d.shape)
-    return data_3d * mask_3d 
-
+if __name__=='__main__':
+    slab0 = np.reshape(np.arange(9), (3, 3))
+    slab1 = np.reshape(np.arange(100, 109), (3, 3))
+    arr_3d = np.zeros((2, 3, 3))
+    arr_3d[0, :, :] = slab0
+    arr_3d[1, :, :] = slab1
+    arr_2d = np.arange(9).reshape((3,3))
+    mask_bool2d = arr_2d < 10
+    make_binary_mask(arr_3d,mask_bool2d)
+    pdb.set_trace()
