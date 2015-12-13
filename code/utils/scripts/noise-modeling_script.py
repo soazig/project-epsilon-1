@@ -1,5 +1,5 @@
 """
-This script is used for the design matric for our linear regression.
+This script is used to design the design matrix for our linear regression.
 We explore the influence of linear and quadratic drifts on the model 
 performance.
 
@@ -24,13 +24,13 @@ from glm import *
 # Locate the paths
 project_path = '../../../'
 data_path = '../../data/ds005/' 
-path_dict = {'data_original':{ 
-			      'type' : '',
+path_dict = {'data_filtered':{ 
+			      'type' : 'filtered',
 			      'bold_img_name' : 'filtered_func_data_mni.nii.gz',
 			      'run_path' : 'model/model001/'
 			     },
-             'data_filtered':{
-		       	      'type' : 'filtered',
+             'data_original':{
+		       	      'type' : '',
                               'bold_img_name' : 'bold.nii.gz',
                               'run_path' : 'BOLD/'
 			     }}
@@ -49,11 +49,6 @@ images_paths = [('ds005_' + d['type'] +'_sub' + s.zfill(3) + '_t1r' + r, \
                  for r in run_list \
                  for s in subject_list]
 
-# Import mask function - for filtered data only
-mask_img = nib.load('../../data/mni_icbm152_t1_tal_nlin_asym_09c_mask_2mm.nii')
-# Make data 4D to prepare for "broadcasting"
-mask = np.reshape(mask, mask.shape + (1,))
-
 # Create the needed directories if they do not exist
 #dirs = ['../../fig/','../../fig/linear_projection',\
 #        '../../txt_output','../../txt_output/linear_model']
@@ -67,9 +62,9 @@ plt.rcParams['image.interpolation'] = 'nearest'
 nice_cmap_values = np.loadtxt('scripts/actc.txt')
 nice_cmap = colors.ListedColormap(nice_cmap_values, 'actc')
 
-
-#Load the image				                
+# Create the mask				                
 thres = 375 #From analysis of the histograms   
+
 for image_path in images_paths:
     name = image_path[0]
     img = nib.load(image_path[1])
@@ -155,16 +150,16 @@ for image_path in images_paths:
 	            %(str(name), str(k))+'.png')
         #plt.show()
                          
-#`    for i in range(P):
-#`        plt.imshow(betas_vols[:, :, 18, i], cmap='gray', alpha=0.5)
-#`        plt.colorbar()
-#`        plt.title('In brain voxel model - projection on X%s \n %s'\
-#`	          %(i,str(name)))
-#`	plt.savefig('../plots/fig/linear_model/pca/%s_noise_modelX%s'\
-#`	            %(str(name), str(i))+'.png')
-#`	plt.show()
-#`        plt.close()
-#`        pdb.set_trace()
+#    for i in range(P):
+#        plt.imshow(betas_vols[:, :, 18, i], cmap='gray', alpha=0.5)
+#        plt.colorbar()
+#        plt.title('In brain voxel model - projection on X%s \n %s'\
+#	          %(i,str(name)))
+#	plt.savefig('../plots/fig/linear_model/pca/%s_noise_modelX%s'\
+#	            %(str(name), str(i))+'.png')
+#	plt.show()
+#        plt.close()
+#        pdb.set_trace()
 #    # PCA
     Y_demeaned = Y - np.mean(Y, axis=1).reshape([-1, 1])
     pdb.set_trace()
