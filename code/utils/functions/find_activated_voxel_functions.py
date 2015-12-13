@@ -86,32 +86,18 @@ def find_activated_voxel(shape, p):
         The index of our activated voxels
         position1...4 correspond to the cond001...4 .txt in model_one
     """
-    loc1 = [i for i,j in enumerate(p[1,...]) if j < 0.05]
-    loc2 = [i for i,j in enumerate(p[2,...]) if j < 0.05]
-    loc3 = [i for i,j in enumerate(p[3,...]) if j < 0.05]
-    loc4 = [i for i,j in enumerate(p[4,...]) if j < 0.05]
+    # get the number of predictors(betas) first
+    n = p.shape[0]-1
+    loc={}
+    lst=[]
+    position=[]
+    for t in range(1,n+1):
+        loc["loc{0}".format(t)] = [i for i,j in enumerate(p[t,...]) if j < 0.05]
+        for i in loc["loc{0}".format(t)]:
+            position.append(get_index(shape,i))
+        position = np.asarray(position)
+        lst.append(position)
+        position=[]
 
-    position1 = []
-    for i in loc1:
-        position1.append(get_index(shape, i))
-
-    position2 = []
-    for i in loc2:
-        position2.append(get_index(shape, i))
-
-    position3 = []
-    for i in loc3:
-        position3.append(get_index(shape, i))
-
-    position4 = []
-    for i in loc4:
-        position4.append(get_index(shape, i))
-
-
-    position1 = np.asarray(position1)
-    position2 = np.asarray(position2)
-    position3 = np.asarray(position3)
-    position4 = np.asarray(position4)
-    
-    return position1, position2, position3, position4
+    return lst
 
