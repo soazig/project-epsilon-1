@@ -37,23 +37,37 @@ def make_mask_filtered_data(img_path, mask_path):
     # nib.save(masked_func, 'masked_' + img_name )
     return masked_func
 
+def make_binary_mask(data, mask_bool):
+    """Return a numpy array with 0 and 1 
+    Parameters
+    ----------
 
-def apply_mask(data_3d, mask_3d):
-    """Apply mask on a 3D image and return the masked data
+    Return
+    ------
+    
+    
+    """
+    new_mask = np.zeros(data.shape)
+    new_mask[mask_bool] = 1
+    return new_mask 
+
+
+def apply_mask(data, mask):
+    """Apply mask on an image and return the masked data
 
     Parameters
     ----------
-    data_3d: 3D numpy array
+    data: numpy array
         The subject's run image data
-    mask_3d: 3D numpy array   
+    mask: numpy array same shape as data  
         The mask for the corresponding data_3d
         has 1 for the positions to select and 
 	0 for the positions to filter out.
     Return
     ------
-    masked_func: 3D numpy array
-        masked data with the values 
-    
+    masked_data: numpy array 
+        Array with the values of the data at the selected positions
+	and 0 for the position filtered out by the mask.
     """
 
     a = data_3d.shape
