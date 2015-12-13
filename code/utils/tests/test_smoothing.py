@@ -1,6 +1,6 @@
 """ Tests for smoothvoxels in smooth module
-Run at the tests directory with:
-    nosetests code/utils/tests/test_smoothing.py
+Run the test with:
+    nosetests test_smoothing.py
 """
 
 import os
