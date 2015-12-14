@@ -19,14 +19,12 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname('__file__'), "../functions/"))
 import numpy as np
 from glm import *
-#from convolution_normal_script import X_matrix
-#from convolution_high_res_script import X_matrix_high_res
-from load_BOLD import *
 import nibabel as nib
 import matplotlib.pyplot as plt
-from scipy.stats import sem
+#from scipy.stats import sem
 from smoothing import *
-from visulation import *
+from scipy.stats import t as t_dist
+#from visualization import *
 
 
 dirs = ['../../../txt_output/multi_beta']
@@ -55,7 +53,7 @@ for x in range(2,17):
 	task_sum +=task[x]
 
 task_mean = task_sum/16
-	# plot task_mean
+#task_mean.shape -> (902629,0)
 
 #calculate variance and plot
 stdlst = []
@@ -63,21 +61,23 @@ for x in range(1,17):
 	stdlst.append(task[x])
 stdarray = np.array(stdlst)
 task_std = stdarray.std(axis=0)
-	# plot task_std
-
-
-#will use sem here (standard error across 16 subjects)
+#task_std.shape -> (902629,0)
+task_std_reshape = task_std.reshape(91,109,91)
 
 
 #calculate t-stat and plot
 task_tstat = task_mean/task_std
+#task_tstat -> (902629,0)
+task_tstat_reshape = task_tstat.reshape(91,109,91)
 	#plot task_tstat
 
 
 #calculate p-value and plot
 task_pval = t_dist.cdf(abs(task_tstat), 15)
+task_pval_reshape = task_pval.reshape(91,109,91)
 1-task_pval
 	#plot task
+
 
 
 
