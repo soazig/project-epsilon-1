@@ -62,18 +62,22 @@ for x in range(1,17):
 stdarray = np.array(stdlst)
 task_std = stdarray.std(axis=0)
 #task_std.shape -> (902629,0)
+task_std_reshape = task_std.reshape(91,109,91)
 
 
 #calculate t-stat and plot
 task_tstat = task_mean/task_std
 #task_tstat -> (902629,0)
+task_tstat_reshape = task_tstat.reshape(91,109,91)
 	#plot task_tstat
 
 
 #calculate p-value and plot
 task_pval = t_dist.cdf(abs(task_tstat), 15)
+task_pval_reshape = task_pval.reshape(91,109,91)
 1-task_pval
 	#plot task
+
 
 
 
