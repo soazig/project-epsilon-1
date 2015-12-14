@@ -41,10 +41,10 @@ path_dict = {'data_filtered':{
 # TODO: uncomment for final version
 #subject_list = [str(i) for i in range(1,17)]
 #run_list = [str(i) for i in range(1,4)]
-run_list = [str(i) for i in range(1,3)]
+run_list = [str(i) for i in range(1,2)]
 subject_list = ['1']
 
-d = path_dict['data_original'] #OR path_dict['data_filtered']
+d = path_dict['data_filtered'] #OR path_dict['data_filtered']
 
 images_paths = [('ds005' + d['type'] +'_sub' + s.zfill(3) + '_t1r' + r, \
                  data_path + 'sub%s/'%(s.zfill(3)) + d['run_path'] \
