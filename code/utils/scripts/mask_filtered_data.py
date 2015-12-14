@@ -43,28 +43,15 @@ def make_mask_filtered_data(func_path, mask_path):
     # nib.save(masked_func, 'masked_' + img_name )
     return masked_func
 
-def resample_filtered_data(func_path, template_path):
-    """Resample template to filtered functional dataset
-    
-    Parameters
-    ----------
-    func_path: string
-        path of the 4D filtered data to resample
-    template_path: string
-        path to the template to apply on the data
-    
-    """
-    filtered_func = nib.load(func_path) 
-    filtered_shape = filtered_func.shape[:3]
-    template_img = nib.load(mni_fname)
-    template_data = template_img.get_data()
-    vox2vox = npl.inv(template_img.affine).dot(filtered_func.affine)
-    M, trans = nib.affines.to_matvec(vox2vox)
-    resampled = affine_transform(template_data, M, trans,
-                                 output_shape=filtered_shape)
-    froot, ext = splitext(mni_fname)
-    new_name = froot + '_2mm' + ext
-    new_img = nib.Nifti1Image(resampled, filtered_func.affine,
-                              template_img.header)
-    #nib.save(new_img, new_name) 
-    return new_img
+if __name__=='__main__':
+    project_path='../../../'
+    func_path = \
+    project_path+\
+    'data/ds005/sub001/model/model001/task001_run001.feat/filtered_func_data_mni.nii.gz'
+    img = nib.load(func_path) 
+    mask_path = project_path+'data/mni_icbm152_t1_tal_nlin_asym_09c_mask_2mm.nii'
+    masked_data = make_mask_filtered_data(func_path, mask_path)
+    new_data_path = project_path+\
+        'data/ds005/sub001/model/model001/task001_run001.feat/masked_filtered_func_data_mni.nii.gz'
+    nib.save(masked_data, new_data_path)
+    #pdb.set_trace()
