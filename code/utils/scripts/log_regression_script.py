@@ -12,7 +12,7 @@ This script outputs plots for each subject and combine them into one image of su
 from __future__ import absolute_import, division, print_function
 import sys, os
 #TODO : later change this
-sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 import numpy as np
 import matplotlib.pyplot as plt
 import nibabel as nib
@@ -22,7 +22,7 @@ from organize_behavior_data import *
 
 
 # Create the necessary directories if they do not exist
-dirs = ['../../fig','../../fig/log_reg_behav']
+dirs = ['../../../fig','../../../fig/log_reg_behav']
 for d in dirs:
     if not os.path.exists(d):
             os.makedirs(d)

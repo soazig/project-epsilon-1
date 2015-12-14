@@ -19,15 +19,13 @@ Steps:
 
 from __future__ import absolute_import, division, print_function
 import sys, os
-#TODO : i'm gonna fix the location when i finish the test for stimuli.py
-sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 import numpy as np
 import matplotlib.pyplot as plt
 import nibabel as nib
 from stimuli import *
 from scipy.stats import gamma
 from organize_behavior_data import *
-from load_BOLD import *
 
 # Create the necessary directories if they do not exist
 dirs = ['../../../txt_output', '../../../txt_output/conv_high_res',\
