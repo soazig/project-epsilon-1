@@ -48,4 +48,12 @@ def test_make_binary_mask():
     mask_bool2d = arr_2d < 10
 #    make_binary_mask(arr_3d,mask_bool2d)
 
+def test_make_bool_mask():
+    # We make a 3D array of shape (3,3,2)
+    slab3 = np.ones((3,))
+    arr_3d = np.zeros((3, 3))
+    arr_3d[0, :] = slab3
+    mask_bool = make_bool_mask(arr_3d)
+    assert_array_equal(mask_bool[0, :],np.ones((3,), dtype=bool))
+    assert_array_equal(mask_bool[1:,: ],np.zeros((2, 3), dtype=bool))
 

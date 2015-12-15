@@ -105,11 +105,6 @@ def log_regression(run_final):
 
 	return logit_pars
 
-if __name__ == '__main__':
-    a=add_gainlossratio(int(sys.argv[1]))
-    b=organize_columns(a)
-    log_regression(b)
-
 
 
 

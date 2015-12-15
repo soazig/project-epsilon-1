@@ -14,6 +14,24 @@ from os.path import splitext
 from numpy.testing import assert_array_equal
 from scipy.ndimage import affine_transform
 
+def make_bool_mask(mask_path):
+    """Return a bool type mask from binary mask
+    Parameters
+    ----------
+    mask_path : 3D float type numpy array
+        the binary array to create the mask from
+	has 0 and 1
+
+    Returns
+    -------
+    mask_bool : 3D bool type numpy array
+        the bool array created from the binary array
+    """
+    mask_img = nib.load(mask_path)
+    mask_data = mask_img.get_data()
+    mask_bool = mask_data == 1
+    return mask_bool
+
 
 def make_mask_filtered_data(func_path, mask_path):
     """Return the masked filtered data
@@ -54,5 +72,4 @@ if __name__=='__main__':
     img = nib.load(func_path) 
     mask_path = project_path+\
        'data/mni_icbm152_t1_tal_nlin_asym_09c_mask_2mm.nii'
-    masked_data = make_mask_filtered_data(func_path, mask_path)
-    pdb.set_trace()
+    masked_func = make_mask_filtered_data(func_path, mask_path)

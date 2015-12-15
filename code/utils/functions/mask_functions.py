@@ -19,9 +19,12 @@ def make_binary_mask(data, mask_bool):
     """Return a numpy array with 0 and 1 
     Parameters
     ----------
-
-    Return
-    ------
+    data: array of float data
+    mask_bool : array of bool
+    Returns
+    -------
+    new_mask: array of float with 1 corresponding
+        to the True values of mask_bool
     """
     data = np.asarray(data)
     mask_bool = np.asarray(mask_bool)
@@ -38,6 +41,21 @@ def make_binary_mask(data, mask_bool):
     new_mask[mask_bool] = 1
     return new_mask 
 
+def make_bool_mask(mask_binary):
+    """Return a bool type mask from binary mask
+    Parameters
+    ----------
+    mask_path : 3D float type numpy array
+        the binary array to create the mask from
+        has 0 and 1
+   
+    Returns
+    -------
+    mask_bool : 3D bool type numpy array
+        the bool array created from the binary array
+    """
+    mask_bool = (mask_binary > 0.5)
+    return mask_bool
 
 
 def apply_mask(data, mask):

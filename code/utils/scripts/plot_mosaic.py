@@ -6,7 +6,7 @@ import sys, os, pdb
 import numpy as np
 import nibabel as nib
 
-def plot_mosaic(img_data, transpose=True):
+def plot_mosaic(img_data, transpose=False):
     """ Return a mosaic plot for each slice of
         the 3rd dimension of img_data
 
