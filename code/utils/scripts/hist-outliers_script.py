@@ -88,9 +88,10 @@ for image_path in images_paths:
     plt.plot([0, N], [thresholds[0], thresholds[0]], ':', label='IQR lo')
     plt.plot([0, N], [thresholds[1], thresholds[1]], ':', label='IQR hi')
     plt.title('voxels std ' + str(name))
+    plt.xlabel('time')
     plt.legend(fontsize=11, \
     ncol=2, loc=9, borderaxespad=0.2)
-    plt.savefig(project_path+'fig/outliers/vol_std_' + str(name) + '.png')
+    plt.savefig(project_path+'fig/outliers/%s_vol_std.png' %str(name))
     plt.close()
 
     #RMS difference values
@@ -103,28 +104,32 @@ for image_path in images_paths:
     plt.plot(x[rms_outliers], rms_dvals[rms_outliers], 'o', label='outliers')
     plt.plot([0, N], [rms_thresholds[0], rms_thresholds[0]], ':', label='IQR lo')
     plt.plot([0, N], [rms_thresholds[1], rms_thresholds[1]], ':', label='IQR hi')
-    plt.title('voxels rms difference' + str(name))
-    plt.legend()
-    plt.savefig(project_path+'fig/outliers/vol_rms_outliers_' + str(name) + '.png')
+    plt.title('voxels rms difference ' + str(name))
+    plt.xlabel('time')
+    plt.legend(fontsize=11, \
+    ncol=2, loc=9, borderaxespad=0.2)
+    plt.savefig(project_path+'fig/outliers/%s_vol_rms_outliers.png'%str(name))
     plt.close()
     #Label the outliers
     T = data.shape[-1]
     ext_outliers = diagnostics.extend_diff_outliers(rms_outliers)
-    np.savetxt(project_path+'txt_output/outliers/extended_vol_rms_outliers_' + \
-      str(name) + '.txt', ext_outliers)
+    np.savetxt(project_path+'txt_output/outliers/%s_extended_vol_rms_outliers.png' \
+      %str(name), ext_outliers)
     x = np.arange(T)
     rms_dvals_ext = np.concatenate((rms_dvals, (0,)), axis=0)
     plt.plot(rms_dvals_ext, label='vol RMS differences ' + str(name))
     plt.plot(x[ext_outliers], rms_dvals_ext[ext_outliers], 'o', label='outliers')
     plt.plot([0, N], [rms_thresholds[0], rms_thresholds[0]], ':', label='IQR lo')
     plt.plot([0, N], [rms_thresholds[1], rms_thresholds[1]], ':', label='IQR hi')
-    plt.legend()
+    plt.xlabel('time')
+    plt.legend(fontsize=11, \
+    ncol=2, loc=9, borderaxespad=0.2)
     plt.savefig(project_path+\
-    'txt_output/outliers/%s_extended_vol_rms_outliers.png'%str(name))
+    'fig/outliers/%s_extended_vol_rms_outliers.png'%str(name))
     plt.close()
 
 print("=============================")
 print("\nHistograms and outliers plots generated")
-print("\nSee project-epsilon/fig/histograms")
-print("\nSee project-epsilon/fig/outliers")
+print("See project-epsilon/fig/histograms")
+print("See project-epsilon/fig/outliers\n\n")
 

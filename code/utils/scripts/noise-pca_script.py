@@ -3,6 +3,10 @@ This script is used to design the design matrix for our linear regression.
 We explore the influence of linear and quadratic drifts on the model 
 performance.
 
+
+This script is for the raw data.
+Run with:
+    python noise-pca_script.py 
 """
 from __future__ import print_function, division
 import sys, os, pdb
@@ -80,9 +84,7 @@ dirs = [project_path+'fig/',\
         project_path+'fig/BOLD',\
         project_path+'fig/drifts',\
         project_path+'fig/pca',\
-	project_path+'fig/pca/projections/',\
-	project_path+'fig/linear_model/mosaic',\
-	project_path+'fig/linear_model/mosaic/middle_slice',\
+	project_path+'fig/mosaic',\
         project_path+'txt_output/',\
 	project_path+'txt_output/MRSS/',\
 	project_path+'txt_output/pca/',\
@@ -92,8 +94,14 @@ for d in dirs:
     if not os.path.exists(d):
         os.makedirs(d)
 
+MRSS_dict = {}
+MRSS_dict['ds005' + d_path['type']] = {}
+
 for image_path in images_paths:
     name = image_path[0]
+    MRSS_dict['ds005' + d_path['type']][name] = {}
+    MRSS_dict['ds005' + d_path['type']][name]['drifts'] = {}
+    MRSS_dict['ds005' + d_path['type']][name]['pca'] = {}
     if d_path['type']=='filtered':
         in_brain_img = nib.load('../../../'+
 	    'data/ds005/sub001/model/model001/task001_run001.feat/'\
@@ -137,7 +145,7 @@ for image_path in images_paths:
 	    '../../../txt_output/conv_high_res/%s_conv_00%s_high_res.txt'\
 	    %(str(name),str(i)))
     reg_str = ['Intercept','Task', 'Gain', 'Loss', 'Distance', 'Linear Drift',\
-                'Quadratic drift', 'PC#1', 'PC#2', 'PC#3', 'PC#4']
+                'Quadratic drift', 'PC1', 'PC2', 'PC3', 'PC4']
     
 
     # Create design matrix X - Including drifts
@@ -180,7 +188,7 @@ for image_path in images_paths:
 	plt.colorbar()
         plt.title('Beta (with drift) values for brain voxel related to ' \
 	    + str(reg_str[k]) + '\n' + d_path['type'] + str(name))
-	plt.savefig(project_path+'fig/linear_model/mosaic/%s_withdrift_%s'\
+	plt.savefig(project_path+'fig/mosaic/%s_withdrift_%s'\
 	            %(d_path['type'] + str(name), str(reg_str[k]))+'.png')
         plt.close()
 	#plt.show()
@@ -191,7 +199,7 @@ for image_path in images_paths:
         plt.title('In brain voxel - Slice 18 Projection on %s\n%s'\
 	          %(str(reg_str[k]), d_path['type'] + str(name)))
 	plt.savefig(\
-	project_path+'fig/linear_model/mosaic/middle_slice/%s_withdrift_middleslice_%s'\
+	project_path+'fig/drifts/%s_withdrift_middleslice_%s'\
 	%(d_path['type'] + str(name), str(k))+'.png')
 	#plt.show()
         plt.clf()
@@ -211,9 +219,9 @@ for image_path in images_paths:
 	plt.title('U' + str(i) + ' vector from SVD \n' + str(name))
         plt.imshow(projection_vols[:, :, 18, i])   
         plt.colorbar()
-        plt.title('PCA - 18th slice projection on PC#' + str(i) + ' from SVD \n ' +\
+        plt.title('PCA - 18th slice projection on PC' + str(i) + ' from SVD \n ' +\
 	          d_path['type'] + str(name))
-	plt.savefig(project_path+'fig/pca/projections/%s_PC#%s.png' \
+	plt.savefig(project_path+'fig/pca/%s_PC%s.png' \
 	%((d_path['type'] + str(name),str(i))))
         #plt.show()
 	plt.clf()
@@ -275,50 +283,45 @@ for image_path in images_paths:
 	plt.colorbar()
         plt.title('Beta (with PCA) values for brain voxel related to ' \
 	    + str(reg_str[k]) + '\n' + d_path['type'] + str(name))
-	plt.savefig(project_path+'fig/linear_model/mosaic/%s_withPCA_%s'\
+	plt.savefig(project_path+'fig/mosaic/%s_withPCA_%s'\
 	            %(d_path['type'] + str(name), str(reg_str[k]))+'.png')
         #plt.show()
 	plt.close()
 	#Show the middle slice only
         plt.imshow(b_pca_vols[:, :, 18, k], cmap='gray', alpha=0.5)
         plt.colorbar()
-        plt.title('In brain voxel model - Slice 18 \n' \
-	          'Projection on X%s \n %s'\
+        plt.title('In brain voxel - Slice 18 Projection on %s \n %s'\
 	          %(str(reg_str[k]),d_path['type'] + str(name)))
 	plt.savefig(\
 	project_path+\
-	'fig/linear_model/mosaic/middle_slice/%s_withPCA_middle_slice_%s'\
+	'fig/pca/%s_withPCA_middle_slice_%s'\
 	%(d_path['type'] + str(name), str(k))+'.png')
 	#plt.show()
         plt.clf()
         plt.close()
-    
-    # Residuals
-    MRSS_dict = {}
-    MRSS_dict['ds005' + d_path['type']] = {}
-    MRSS_dict['ds005' + d_path['type']]['drifts'] = {} 
-    MRSS_dict['ds005' + d_path['type']]['pca'] = {}
-    for z in MRSS_dict['ds005' + d_path['type']]:
-        MRSS_dict['ds005' + d_path['type']][z]['MRSS'] = [] 
+
+    # Residuals    
     residuals = Y - X.dot(betas)
     df = X.shape[0] - npl.matrix_rank(X)
     MRSS = np.sum(residuals ** 2 , axis=0) / df
     residuals_pca = Y - X_pca.dot(B_pca)
     df_pca = X_pca.shape[0] - npl.matrix_rank(X_pca)
     MRSS_pca = np.sum(residuals_pca ** 2 , axis=0) / df_pca
-    MRSS_dict['ds005' + d_path['type']]['drifts']['mean_MRSS'] = np.mean(MRSS)
-    MRSS_dict['ds005' + d_path['type']]['pca']['mean_MRSS'] = np.mean(MRSS_pca)
+    MRSS_dict['ds005' + d_path['type']][name]['drifts']['mean_MRSS'] = []
+    MRSS_dict['ds005' + d_path['type']][name]['pca']['mean_MRSS'] = []
+    MRSS_dict['ds005' + d_path['type']][name]['drifts']['mean_MRSS'] = np.mean(MRSS)
+    MRSS_dict['ds005' + d_path['type']][name]['pca']['mean_MRSS'] = np.mean(MRSS_pca)
+with open(project_path+'txt_output/MRSS/ds005%s_MRSS.json'\
+        %(d_path['type']), 'w') as file_out:
+    json.dump(MRSS_dict, file_out)
     # Save the mean MRSS values to compare the performance 
     # of the design matrices
-    for design_matrix, beta, mrss, name in \
-        [(X, betas, MRSS, 'drifts'), (X_pca, B_pca, MRSS_pca, 'pca')]:
-	MRSS_dict['ds005' + d_path['type']][name]['p-values'] = []
-	MRSS_dict['ds005' + d_path['type']][name]['t-test'] = []
-        with open(project_path+'txt_output/MRSS/ds005%s_MRSS.json'\
-            %(d_path['type']), 'w') as file_out:
-            json.dump(MRSS_dict, file_out)
-
-
+#    for design_matrix, beta, mrss, name in \
+#        [(X, betas, MRSS, 'drifts'), (X_pca, B_pca, MRSS_pca, 'pca')]:
+#	MRSS_dict['ds005' + d_path['type']][name]['p-values'] = []
+#	MRSS_dict['ds005' + d_path['type']][name]['t-test'] = []
+#
+#
 #        SE = np.zeros(beta.shape)
 #        for i in range(design_matrix.shape[-1]):
 #            c = np.zeros(design_matrix.shape[-1])
