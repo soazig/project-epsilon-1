@@ -17,10 +17,10 @@ tivated voxels. With these data, we attempted to find out the general pattern in
 ains across 16 subjects. 
 
 To multi-compare, we chose to explore on filtered data set (shape: 91*109 * 91) since original
- data set is not normalized in terms of voxel location. Applying our general linear modeling o
- n each subject as above, we first collected all beta values for each voxel across time course
-  of each subject. Now, we have beta values of shape of (91, 109, 91) for each of 16 subjects.
-   We compare on each single voxel across subjects. To do this, We have total 4 steps.
+data set is not normalized in terms of voxel location. Applying our general linear modeling on
+each subject as above, we first collected all beta values for each voxel across time course
+of each subject. Now, we have beta values of shape of (91, 109, 91) for each of 16 subjects.
+We compare on each single voxel across subjects. To do this, we have a total of 4 steps.
 
 \begin{itemize}
 \item Calculate average of beta value on a single voxel across 16 subjects. Do this for whole v
@@ -38,12 +38,11 @@ xels.
 \end{itemize}
 
 For the 4th step, we have an issue of false positives: since we're executing 91\*109\*91 number
- of hypothesis testing, note that an error probability of p value = 0.05 means that if we would 
- repeat the same test 1000 times and assume that there is no effect of the experiment, we would
-  wrongly reject or accept the null or alternative hypothesis on average. Therefore, we dec
-  ided to strengthen our p-value threshold with Bon-ferroni correction: our new p-value thresho
-  ld is 0.
-  05/(91\*109\*91)
+of hypothesis testing, note that an error probability of p value = 0.05 means that if we would 
+repeat the same test 1000 times and assume that there is no effect of the experiment, we would
+wrongly reject or accept the null or alternative hypothesis on average. Therefore, we decided 
+to strengthen our p-value threshold with Bon-ferroni correction: our new p-value threshold is 
+0.05/(91\*109\*91)
 
 \begin{figure}[H] 
 \centering \includegraphics[scale=0.5]{../fig/multi_beta/mean_task.png}	 
@@ -52,14 +51,14 @@ For the 4th step, we have an issue of false positives: since we're executing 91\
 
 
 \subsection {Results}
-As the image of mean of beta values on each voxel across all subjects on task condition indicat
-es, we are able to classify which portion of brain is in general activated due to this experime
-nt. However, there should be fluctuation over different subjects. To identify this, standard de
-viation is also shown. As the image in the appendix illustrates, fluctuation occurs on similar r
-egions because each subject's hemodynamic response degree must be different. We found out that th
-e t-statistics in general are not significant enough; therefore, we could not elaborately indicat
-e the specific portion of brain related to the mixed gamble task. However, t-statistics and p
--value of voxels over a brain well correspond to each other.
+As the image of mean of beta values on each voxel across all subjects on task condition indicates, 
+we are able to classify which portion of brain is in general activated due to this experiment. 
+However, there should be fluctuation over different subjects. To identify this, standard deviation 
+is also shown. As the image in the appendix illustrates, fluctuation occurs on similar regions 
+because each subject's hemodynamic response degree must be different. We found out that the 
+t-statistics in general are not significant enough; therefore, we could not elaborately indicate 
+the specific portion of brain related to the mixed gamble task. However, t-statistics and p-value 
+of voxels over a brain well correspond to each other.
 
 
 
