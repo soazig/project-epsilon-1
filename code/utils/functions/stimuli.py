@@ -43,8 +43,8 @@ def events2neural(task, tr, n_trs):
     time_course : array shape (n_trs,)
         Predicted neural time course, one value per TR
     """
-    if task.ndim != 2 or task.shape[1] != 3:
-        raise ValueError("Is {0} really a task file?", task_fname)
+    #if task.ndim != 2 or task.shape[1] != 3:
+    #    raise ValueError("Is {0} really a task file?", task_fname)
     # Convert onset, duration seconds to TRs
     task[:, :2] = task[:, :2] / tr
     # Neural time course from onset, duration, amplitude for each event
@@ -54,7 +54,8 @@ def events2neural(task, tr, n_trs):
     return time_course
 
 def events2neural_high(cond_data, TR=2, n_trs=240, tr_div=100):
-    """Return predicted neural time course in the case when onsets are not equally spaced and do not start on a TR.
+    """Return predicted neural time course in the case when onsets 
+    are not equally spaced and do not start on a TR.
     
     Parameters:
     ----------
@@ -82,7 +83,8 @@ def events2neural_high(cond_data, TR=2, n_trs=240, tr_div=100):
     high_res_onset_indices = onsets_in_scans * tr_div
     high_res_durations = durations_seconds / TR * tr_div
 
-    for hr_onset, hr_duration, amplitude in list(zip(high_res_onset_indices,high_res_durations,amplitudes)):
+    for hr_onset, hr_duration, amplitude \
+        in list(zip(high_res_onset_indices,high_res_durations,amplitudes)):
         hr_onset = int(round(hr_onset))
         hr_duration = int(round(hr_duration))
         high_res_neural[hr_onset:hr_onset+hr_duration] = amplitude
