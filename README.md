@@ -66,9 +66,12 @@ Please follow the insturctions to explore on the repository.
    - noise-pca (prerequisites: convolution-normal, convolution-high)
    - multi-comparison (prerequisites: convolution-normal, convolution-high, glm)
 
+###Special note for Ross
+- Please use `make filtered_data_only` to complete the data download before runnning : `make analysis-except-multi` and then `make multi-comparison`
+
 ## Contributors
-Min Gu Jo ([`mingujo`](https://github.com/mingujo))\\
-Soazig Kaam ([`soazig`](https://github.com/soazig))\\
-Zhuangdi Li ([`lizhua`](https://github.com/lizhua))\\
-Ye Zhi ([`ye-zhi`](https://github.com/ye-zhi))\\
-Timothy Yu ([`timothy1191xa`](https://github.com/timothy1191xa))\\
+- Min Gu Jo ([`mingujo`](https://github.com/mingujo))
+- Soazig Kaam ([`soazig`](https://github.com/soazig))
+- Zhuangdi Li ([`lizhua`](https://github.com/lizhua))
+- Ye Zhi ([`ye-zhi`](https://github.com/ye-zhi))
+- Timothy Yu ([`timothy1191xa`](https://github.com/timothy1191xa))
