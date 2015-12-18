@@ -1,5 +1,4 @@
 """ test_glm.py_
-This script checks the glm function.
 
 Run at the tests directory with:
     nosetests code/utils/tests/test_glm.py

@@ -46,9 +46,9 @@ path_dict = {'data_filtered':{
 			     }}
 
 # TODO: uncomment for final version
-subject_list = [str(i) for i in range(1,17)]
-#subject_list = ['1','5']
-run_list = [str(i) for i in range(1,4)]
+#subject_list = [str(i) for i in range(1,17)]
+subject_list = ['1','5']
+run_list = [str(i) for i in range(1,2)]
 cond_list = [str(i) for i in range(1,5)]
 
 #TODO: Change to relevant path for data or other thing
@@ -67,7 +67,6 @@ thres = 375 #from analysis of the histograms
 for image_path in images_paths:
     name = image_path[0]
     print("Starting t-test analysis and plot for subject "+name[9:12])
-    pdb.set_trace()
     img = nib.load(image_path[1])
     data_int = img.get_data()
     data = data_int.astype(float)
@@ -94,7 +93,7 @@ for image_path in images_paths:
     X_matrix[:,6] = quadratic_drift
     beta, t, df, p = t_stat(smooth_data, X_matrix)
     for cond in range(0,4):
-        print("Starting test for condition " + str(i))
+        print("Starting test for condition " + str(cond+1))
         t_newshape = np.reshape(t[cond,:],vol_shape)
         t_newshape[~in_brain_mask]=np.nan
         t_T = np.zeros(vol_shape)

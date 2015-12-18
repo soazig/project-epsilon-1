@@ -106,9 +106,9 @@ for image_path in images_paths:
 	#    'data/ds005/sub001/model/model001/task001_run001.feat/'\
 	#    + 'masked_filtered_func_data_mni.nii.gz')
 	# Image shape (91, 109, 91, 240)
-        md = data_path + 'sub%s/'%(s.zfill(3)) + d_path['run_path'] \
-        + 'task001_run%s%s/masked_%s' %(r.zfill(3),d_path['feat'],\
-        d_path['bold_img_name']) 
+        md = os.path.join(\
+	       str('/'.join(image_path[1].split('/')[:-1])), \
+	       'masked_' + str(d_path['bold_img_name']))
         if not os.path.exists(md):
             print("Filtering brain image for: ")
 	    print(str(name))
