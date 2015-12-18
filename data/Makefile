@@ -1,5 +1,6 @@
 .PHONY: download_data validate_data download_filtered_data download_test_data
 download_data:
+	wget -P ../code/utils/scripts/ http://www.jarrodmillman.com/rcsds/_downloads/actc.txt
 	wget http://openfmri.s3.amazonaws.com/tarballs/ds005_raw.tgz
 	tar -xvzf ds005_raw.tgz
 	rm ds005_raw.tgz 

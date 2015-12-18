@@ -61,7 +61,6 @@ analysis-except-multi:
 	make convolution-normal
 	make t-test
 	make glm
-	make correlation
 	make noise-pca 
 
 report:
