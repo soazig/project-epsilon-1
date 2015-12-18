@@ -67,7 +67,7 @@ Please follow the insturctions to explore on the repository.
    - multi-comparison (prerequisites: convolution-normal, convolution-high, glm)
 
 ###Special note for Ross
-- Please use `make filtered_data_only` to complete the data download before runnning : `make analysis-except-multi` and then `make multi-comparison`
+- Please use `make filtered_data_only` to complete the download of the filtered data before runnning : `make analysis-except-multi` and then `make multi-comparison`
 
 ## Contributors
 - Min Gu Jo ([`mingujo`](https://github.com/mingujo))
