@@ -23,8 +23,8 @@ conv_path = project_path + 'txt_output/conv_normal/'
 conv_high_res_path = project_path + 'txt_output/conv_high_res/'
 
 # select your own subject
-#subject_list = [str(i) for i in range(1,17)]
-subject_list = ['1','5']
+subject_list = [str(i) for i in range(1,17)]
+#subject_list = ['1','5']
 run_list = [str(i) for i in range(1,2)]
 conv_list = [str(i) for i in range(1,5)]
 

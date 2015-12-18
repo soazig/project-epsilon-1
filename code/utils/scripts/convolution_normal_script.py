@@ -39,6 +39,7 @@ data_path = project_path+'data/ds005/'
 
 #change here to get your subject !
 subject_list = [str(i) for i in range(1,17)]
+#subject_list = ['1','5']
 #change here to get your run number !
 run_list = [str(i) for i in range(1,4)]
 cond_list = [str(i) for i in range(1,5)]

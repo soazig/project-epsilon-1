@@ -6,7 +6,7 @@ clean:
 	find . -name "*.so" -o -name "*.pyc" -o -name "*.pyx.md5" | xargs rm -f
 
 coverage:
-	nosetests code/utils/tests data/tests/ --with-coverage --cover-package=code/utils/functions,data/data_hashes.py
+	nosetests code/utils/tests data/tests/ --with-coverage --cover-package=code/utils/functions,data/data_hashes.py,data/tests/test_get_check_hashes.py
 
 test:
 	nosetests code/utils/tests data/tests/
@@ -16,6 +16,9 @@ verbose:
 
 data:
 	cd data && make download_all
+
+filtered_data_only:
+	cd data && make download_filtered_data
 
 validate_data:
 	cd data && make validate_data
@@ -39,9 +42,6 @@ convolution-high:
 convolution-normal:
 	cd code/utils/scripts && python convolution_normal_script.py
 
-correlation:
-	cd code/utils/scripts && python correlation_script.py
-
 glm:
 	cd code/utils/scripts && python glm_script.py
 
@@ -61,7 +61,6 @@ analysis-except-multi:
 	make convolution-normal
 	make t-test
 	make glm
-	make correlation
 	make noise-pca 
 
 report:

@@ -9,17 +9,15 @@ files for multi-comparison test.
 """
 
 
-import sys, os
-##sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
-sys.path.append(os.path.join(os.path.dirname('__file__'), "../functions/"))
+import sys, os, pdb
 import numpy as np
-from glm import *
-#from convolution_normal_script import X_matrix
-#from convolution_high_res_script import X_matrix_high_res
 import nibabel as nib
 import matplotlib.pyplot as plt
+
+sys.path.append(os.path.join(os.path.dirname('__file__'), "../functions/"))
+from glm_func import *
 from smoothing import *
-from t_test import *
+from t_stat import *
 
 # Create the necessary directories if they do not exist
 dirs = ['../../../txt_output/multi_beta']
@@ -35,6 +33,7 @@ conv_high_res_path = project_path + 'txt_output/conv_high_res/'
 
 # select your own subject
 subject_list = [str(i) for i in range(1,17)]
+#subject_list = ['1','5']
 
 conv_list = [str(i) for i in range(1,5)]
 
@@ -52,12 +51,13 @@ txt_paths = [('ds005_sub' + s.zfill(3) + '_t1r1' +'_cond'+ c.zfill(3),\
                 for s in subject_list \
                 for c in conv_list]
 
-print("\n==================================================")
-
+print("\n=======================================================================")
+print("Starting multi_betas analysis")
+print("Generating the beta values for run 1 of each subject for each condition\n")
 for txt_path in txt_paths:
 # get 4_d image data
     name = txt_path[0] 
-    print("Starting analysis for subject " + name[9:12] + " condition " + name[24])
+    print("Starting multi_betas analysis for subject " + name[9:12] + " condition " + name[24])
     img = nib.load(txt_path[5])
     data_int = img.get_data()
     data =  data_int.astype(float)

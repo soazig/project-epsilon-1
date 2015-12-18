@@ -55,16 +55,16 @@ Please follow the insturctions to explore on the repository.
    - `make convolution-normal`
    - `make t-test`
    - `make glm`
-   - `make correlation`
    - `make noise-pca`
    - `make multi-comparison`
 
 - If you want to perform each analysis, please be aware of the following dependencies:
-   - linear (prerequisites: convolution)
-   - t-test (prerequisites: convolution)
-   - glm (prerequesites: convolution)
-   - noise-pca (prerequisites: convolution)
-   - multi-comparison (prerequisites: convolution)
+   - linear (prerequisites: convolution-normal, convolution-high)
+   - logistic (prerequisites: convolution-normal, convolution-high)
+   - t-test (prerequisites: convolution-normal, convolution-high)
+   - glm (prerequesites: convolution-normal, convolution-high)
+   - noise-pca (prerequisites: convolution-normal, convolution-high)
+   - multi-comparison (prerequisites: convolution-normal, convolution-high, glm)
 
 ## Contributors
 Min Gu Jo ([`mingujo`](https://github.com/mingujo))\\

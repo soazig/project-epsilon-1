@@ -23,8 +23,8 @@ run_N = 3
 project_path = '../'
 data_path = project_path + 'data/'
 
-#subject_list = [str(i) for i in range(1,subject_N+1)]
-subject_list = [str(i) for i in range(1,5)]
+subject_list = [str(i) for i in range(1,subject_N+1)]
+#subject_list = ['1','5']
 run_list = [str(i) for i in range(1,run_N+1)]
 base_url = 'http://nipy.bic.berkeley.edu/rcsds/'
 file_name = 'filtered_func_data_mni.nii.gz'
@@ -33,7 +33,7 @@ file_name = 'filtered_func_data_mni.nii.gz'
 txt_out = []
 for s in subject_list:
     for r in run_list:
-        start = 'wget -P ' + data_path
+        start = 'wget -N -P ' + data_path
         location = project_id + '/sub'+ s.zfill(3)\
            +'/model/model001/task001_run%s.feat/'%(r.zfill(3))
         link = base_url + location + file_name
