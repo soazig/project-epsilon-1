@@ -1,7 +1,7 @@
-""" test_glm.py_
-
-Run at the tests directory with:
-    nosetests code/utils/tests/test_glm.py
+""" test_glm.py
+Tests for the functions in glm_func module
+Run from this directory with:
+    nosetests test_glm.py
 
 """
 # Loading modules.
